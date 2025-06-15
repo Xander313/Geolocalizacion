@@ -5,27 +5,27 @@
 <div class='row'>
     <div class="col-md-2"></div>
     <div class="col-md-8">
-        <form action="{{ route('predios.store')}}" method="POST">
+        <form action="{{ route('predios.update', $predio->id)}}" method="POST">
             @csrf
-            <h3><b>Registrar Nuevo Predio</b></h3>
+            @method('PUT')
+
+            <h3><b>Editar Predio</b></h3>
             <hr>
             <label for=""><b>Propietario:</b> </label> <br>
-            <input type="text" name="propietario"
-               id="propietario" placeholder="Ingrese ..."
-               required class="form-control"> <br> 
+            <input type="text" name="propietario" id="propietario" placeholder="Ingrese ..." required class="form-control" value="{{ old('propietario', $predio->propietario) }}"> <br> 
             <label for=""><b>Clave Castral:</b></label>        
             <input type="number" name="clave" id="clave"
             placeholder="Ingrese la clave catastral"
-            class="form-control"> <br>
+            class="form-control" value="{{ old('claveCatastral', $predio->claveCatastral) }}"> <br>
             <div class="row">
                 <div class="col-md-5">
                     <label for=""><b>COORDENADA N° 1</b></label> <br>
                     <label for=""><b>Latitud:</b></label><br>
                     <input type="number" name="latitud1" id="latitud1"
-                    class="form-control" readonly placeholder="Seleccione ..."><br>
+                    class="form-control" readonly placeholder="Seleccione ..." value="{{ old('latitud1', $predio->latitud1) }}"><br>
                     <label for=""><b>Longitud:</b></label><br>
                     <input type="number" name="longitud1" id="longitud1"
-                    class="form-control" readonly placeholder="Seleccione ...">
+                    class="form-control" readonly placeholder="Seleccione ..." value="{{ old('longitud1', $predio->longitud1) }}">
                 </div>
                 <div class="col-md-7">
                     <div id="mapa1" style="height:180px; 
@@ -38,10 +38,10 @@
                     <label for=""><b>COORDENADA N° 2</b></label> <br>
                     <label for=""><b>Latitud:</b></label><br>
                     <input type="number" name="latitud2" id="latitud2"
-                    class="form-control" readonly placeholder="Seleccione ..."><br>
+                    class="form-control" readonly placeholder="Seleccione ..." value="{{ old('latitud2', $predio->latitud2) }}"><br>
                     <label for=""><b>Longitud:</b></label><br>
                     <input type="number" name="longitud2" id="longitud2"
-                    class="form-control" readonly placeholder="Seleccione ...">
+                    class="form-control" readonly placeholder="Seleccione ..." value="{{ old('longitud2', $predio->longitud2) }}">
                 </div>
                 <div class="col-md-7">
                     <div id="mapa2" style="height:180px; 
@@ -54,10 +54,10 @@
                     <label for=""><b>COORDENADA N° 3</b></label> <br>
                     <label for=""><b>Latitud:</b></label><br>
                     <input type="number" name="latitud3" id="latitud3"
-                    class="form-control" readonly placeholder="Seleccione ..."><br>
+                    class="form-control" readonly placeholder="Seleccione ..." value="{{ old('latitud3', $predio->latitud3) }}"><br>
                     <label for=""><b>Longitud:</b></label><br>
                     <input type="number" name="longitud3" id="longitud3"
-                    class="form-control" readonly placeholder="Seleccione ...">
+                    class="form-control" readonly placeholder="Seleccione ..." value="{{ old('longitud3', $predio->longitud3) }}">
                 </div>
                 <div class="col-md-7">
                     <div id="mapa3" style="height:180px; 
@@ -70,10 +70,10 @@
                     <label for=""><b>COORDENADA N° 4</b></label> <br>
                     <label for=""><b>Latitud:</b></label><br>
                     <input type="number" name="latitud4" id="latitud4"
-                    class="form-control" readonly placeholder="Seleccione ..."><br>
+                    class="form-control" readonly placeholder="Seleccione ..." value="{{ old('latitud4', $predio->latitud4) }}"><br>
                     <label for=""><b>Longitud:</b></label><br>
                     <input type="number" name="longitud4" id="longitud4"
-                    class="form-control" readonly placeholder="Seleccione ...">
+                    class="form-control" readonly placeholder="Seleccione ..." value="{{ old('longitud4', $predio->longitud4) }}">
                 </div>
                 <div class="col-md-7">
                     <div id="mapa4" style="height:180px; 
@@ -88,7 +88,7 @@
                     Limpiar
                 </button>
                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                 <input type="submit" class="btn btn-success" value="Guardar Previo">
+                 <input type="submit" class="btn btn-info" value="Reescribir Previo">
             </center>
         </form>
     </div>
@@ -121,6 +121,11 @@
       function initMap(){
        // alert("mapa ok");
         var latitud_longitud= new google.maps.LatLng(-0.9374805,-78.6161327);
+        var coordenada1 = new google.maps.LatLng({{ old('latitud1', $predio->latitud1) }},{{ old('longitud1', $predio->longitud1) }});
+        var coordenada2 = new google.maps.LatLng({{ old('latitud2', $predio->latitud2) }},{{ old('longitud2', $predio->longitud2) }});
+        var coordenada3 = new google.maps.LatLng({{ old('latitud3', $predio->latitud3) }},{{ old('longitud3', $predio->longitud3) }});
+        var coordenada4 = new google.maps.LatLng({{ old('latitud4', $predio->latitud4) }},{{ old('longitud4', $predio->longitud4) }});
+
 
         //INICIO COORDENADA 1
         var mapa1=new google.maps.Map(
@@ -132,7 +137,7 @@
           }
         );
         var marcador1=new google.maps.Marker({
-          position:latitud_longitud,
+          position:coordenada1,
           map:mapa1,
           title:"Seleccione la coordenada 1",
           draggable:true
@@ -159,7 +164,7 @@
           }
         );
         var marcador2=new google.maps.Marker({
-          position:latitud_longitud,
+          position:coordenada2,
           map:mapa2,
           title:"Seleccione la coordenada 3",
           draggable:true
@@ -187,7 +192,7 @@
           }
         );
         var marcador3=new google.maps.Marker({
-          position:latitud_longitud,
+          position:coordenada3,
           map:mapa3,
           title:"Seleccione la coordenada 3",
           draggable:true
@@ -216,7 +221,7 @@
           }
         );
         var marcador4=new google.maps.Marker({
-          position:latitud_longitud,
+          position:coordenada4,
           map:mapa4,
           title:"Seleccione la coordenada 4",
           draggable:true

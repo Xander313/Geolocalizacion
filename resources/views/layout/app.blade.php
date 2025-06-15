@@ -66,7 +66,7 @@
       <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="{{ route('clientes.index') }}" class="active" style="color: black;">Casita<br></a></li>
-          <li><a href="{{ route('predios.create') }}" class="active" style="color: black;">Registrar previos<br></a></li>
+          <li><a href="{{ route('predios.index') }}" class="active" style="color: black;">Registrar previos<br></a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
